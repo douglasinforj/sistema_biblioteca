@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Livro, Autor, Emprestimo
 from django.db.models import Q
 
+from django.core.paginator import Paginator     #paginação
+
 def livros_list(request):
 
     #filtros via query parameters
@@ -21,5 +23,11 @@ def livros_list(request):
     elif disponivel.lower() == 'false':
         livros = livros.filter(disponivel=False)
 
-    return render(request, 'core/livros_list.html', {'livros': livros})
+    #paginação: 20 livros por páginas
+    paginator = Paginator(livros, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+
+    return render(request, 'core/livros_list.html', {'page_obj': page_obj})
 
