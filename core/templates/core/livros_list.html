@@ -8,6 +8,22 @@
 <body>
 
     <h1>Lista de Livros</h1>
+    <form method="get">
+        <input type="text" name="titulo" placeholder="Titulo" value="{{ request.GET.titulo}}" >
+        <input type="text" name="autor" placeholder="Autor" value="{{ request.GET.autor }}" >
+        <select name="disponivel">
+            <option value="">Disponibilidade</option>
+            <option value="true" {% if request.GET.disponivel == 'true' %}selected{% endif  %} >Disponível</option>
+            <option value="false" {% if request.GET.disponivel == 'false' %}selected{% endif %}>Indisponível</option>
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <ul>
+        {% for livro in livros %}
+            <li>{{ livro.titulo}} - {{ livro.autor.nome }} - Disponível: {{ livro.disponível }}</li>
+        {% endfor%}
+    </ul>
     
 </body>
 </html>
