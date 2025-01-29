@@ -17,9 +17,9 @@ class Livro(models.Model):
         return self.titulo
     
 class Emprestimo(models.Model):
-    Livro = models.ForeignKey(Livro, on_delete=models.CASCADE, related_name='emprestimos')
-    nome_usuário  = models.CharField(max_length=100)
-    data_empresto = models.DateField(auto_now_add=True)
+    livro = models.ForeignKey(Livro, on_delete=models.CASCADE, related_name='emprestimos')
+    nome_usuario  = models.CharField(max_length=100)
+    data_emprestimo = models.DateField(auto_now_add=True)
     data_devolucao = models.DateField(null=True, blank=True)
 
     def __str__(self):
