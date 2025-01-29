@@ -14,16 +14,37 @@
         <select name="disponivel">
             <option value="">Disponibilidade</option>
             <option value="true" {% if request.GET.disponivel == 'true' %}selected{% endif  %} >Disponível</option>
-            <option value="false" {% if request.GET.disponivel == 'false' %}selected{% endif %}>Indisponível</option>
+            <option value="false" {% if request.GET.indisponivel == 'false' %}selected{% endif %}>Indisponível</option>
         </select>
         <button type="submit">Filtrar</button>
     </form>
 
+    <!--Listando Livros-->
     <ul>
-        {% for livro in livros %}
-            <li>{{ livro.titulo}} - {{ livro.autor.nome }} - Disponível: {{ livro.disponível }}</li>
+        {% for livro in page_obj %}
+        <li>{{ livro.titulo }} - {{ livro.autor.nome }} - Disponível: {{ livro.disponivel|yesno:"Sim,Não" }}</li>
+        
+        {% empty %}
+            <li>Nenhum Livro encontrado</li>
         {% endfor%}
     </ul>
+
+    <!--Paginação-->
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1{% if request.GET.titulo %}&titulo={{ request.GET.titulo }}{% endif %}{% if request.GET.autor %}&autor={{ request.GET.autor }}{% endif %}{% if request.GET.disponivel %}&disponivel={{ request.GET.disponivel }}{% endif %}">Primeira</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.titulo %}&titulo={{ request.GET.titulo }}{% endif %}{% if request.GET.autor %}&autor={{ request.GET.autor }}{% endif %}{% if request.GET.disponivel %}&disponivel={{ request.GET.disponivel }}{% endif %}">Anterior</a>
+        {% endif %}
+
+        <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.titulo %}&titulo={{ request.GET.titulo }}{% endif %}{% if request.GET.autor %}&autor={{ request.GET.autor }}{% endif %}{% if request.GET.disponivel %}&disponivel={{ request.GET.disponivel }}{% endif %}">Próxima</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.titulo %}&titulo={{ request.GET.titulo }}{% endif %}{% if request.GET.autor %}&autor={{ request.GET.autor }}{% endif %}{% if request.GET.disponivel %}&disponivel={{ request.GET.disponivel }}{% endif %}">Última</a>
+        {% endif %}
+    </div>
+
+
     
 </body>
 </html>
