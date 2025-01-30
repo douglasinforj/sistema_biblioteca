@@ -53,7 +53,7 @@ def livro_create(request):
 
 def livro_detail(request, pk):
     livro = get_object_or_404(Livro, pk=pk)
-    return render(request, 'livos/livro_detail.html')
+    return render(request, 'livros/livro_detail.html')
 
 
 
