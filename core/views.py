@@ -4,6 +4,13 @@ from django.db.models import Q
 
 from django.core.paginator import Paginator     #paginação
 
+
+
+def home(request):
+    return render(request, 'core/home.html')
+
+
+
 def livros_list(request):
 
     #filtros via query parameters
