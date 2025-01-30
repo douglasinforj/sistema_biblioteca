@@ -40,10 +40,6 @@ def livros_list(request):
 
 
 
-from django.core.paginator import Paginator
-from django.shortcuts import render
-from .models import Emprestimo
-
 def emprestimos_list(request):
     usuario = request.GET.get('usuario', '')
     livro = request.GET.get('livro', '')
