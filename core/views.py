@@ -31,3 +31,22 @@ def livros_list(request):
 
     return render(request, 'core/livros_list.html', {'page_obj': page_obj})
 
+
+
+def emprestimos_list(request):
+    usuario = request.GET.get('usuario', '')
+    livro = request.GET.get('livro','')
+    data_inicio = request.GET.get('data_inicio','')
+    data_fim = request.GET.get('data_fim','')
+
+
+    emprestimos = Emprestimo.objects.all()
+
+    if usuario:
+        emprestimos = emprestimos.filter(nome_usuario__icotains=usuario)
+    if livro:
+        emprestimos = emprestimos.filter(livro__titulo__icontains=livro)
+    if data_inicio and data_fim:
+        emprestimos = emprestimos.filter(data_emprestimo__range=[data_inicio, data_fim])
+    
+    return render(request, 'core/emprestimos_list.html', {'emprestimos': emprestimos})
