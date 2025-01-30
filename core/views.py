@@ -46,7 +46,14 @@ def emprestimos_list(request):
         emprestimos = emprestimos.filter(nome_usuario__icotains=usuario)
     if livro:
         emprestimos = emprestimos.filter(livro__titulo__icontains=livro)
-    if data_inicio and data_fim:
-        emprestimos = emprestimos.filter(data_emprestimo__range=[data_inicio, data_fim])
+    if data_inicio:
+        emprestimos = emprestimos.filter(data_emprestimo__gte=data_inicio)
+    if data_fim:
+        emprestimos = emprestimos.filter(data_devolucao__lte=data_fim)
+
+    #paginação: 20 livros por páginas
+    paginator = Paginator(emprestimos, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
-    return render(request, 'core/emprestimos_list.html', {'emprestimos': emprestimos})
+    return render(request, 'core/emprestimos_list.html', {'page_obj': page_obj})
