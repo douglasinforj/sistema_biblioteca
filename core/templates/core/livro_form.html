@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h2>Lista de Livros</h2>
+<a href="{% url 'livro_create' %}" class="btn btn-primary">Adicionar Novo Livro</a>
+<ul>
+    {% for livro in livros %}
+    <li>
+        <a href="{% url 'livro_detail' livro.pk %}">{{ livro.titulo }}</a> - {{ livro.autor }}
+    </li>
+    {% empty %}
+        <li>Nenhum livro Cadadastrado</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
