@@ -33,17 +33,20 @@ def livros_list(request):
 
 
 
+from django.core.paginator import Paginator
+from django.shortcuts import render
+from .models import Emprestimo
+
 def emprestimos_list(request):
     usuario = request.GET.get('usuario', '')
-    livro = request.GET.get('livro','')
-    data_inicio = request.GET.get('data_inicio','')
-    data_fim = request.GET.get('data_fim','')
-
+    livro = request.GET.get('livro', '')
+    data_inicio = request.GET.get('data_inicio', '')
+    data_fim = request.GET.get('data_fim', '')
 
     emprestimos = Emprestimo.objects.all()
 
     if usuario:
-        emprestimos = emprestimos.filter(nome_usuario__icotains=usuario)
+        emprestimos = emprestimos.filter(nome_usuario__icontains=usuario)  
     if livro:
         emprestimos = emprestimos.filter(livro__titulo__icontains=livro)
     if data_inicio:
@@ -51,9 +54,9 @@ def emprestimos_list(request):
     if data_fim:
         emprestimos = emprestimos.filter(data_devolucao__lte=data_fim)
 
-    #paginação: 20 livros por páginas
+    # Paginação: 20 registros por página
     paginator = Paginator(emprestimos, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
-    return render(request, 'core/emprestimos_list.html', {'page_obj': page_obj})
+
+    return render(request, 'core/emprestimos_list.html', {'emprestimos': page_obj})  # Corrigido contexto
