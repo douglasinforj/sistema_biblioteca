@@ -3,24 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Emprestimos</title>
+    <title>Lista de Empréstimos</title>
 </head>
 <body>
-    <h1>Lista de Emprestimos</h1>
+    <h1>Lista de Empréstimos</h1>
 
     <form method="get">
         <input type="text" name="usuario" placeholder="Usuário" value="{{ request.GET.usuario }}">
         <input type="text" name="livro" placeholder="Título do Livro" value="{{ request.GET.livro }}">
-        <input type="text" name="data_inicio" placeholder="Data Início" value="{{ request.GET.data_inicio }}">
-        <input type="text" name="data_fim" placeholder="Data Fim" value="{{ request.GET.data_fim }}">
+        <input type="date" name="data_inicio" value="{{ request.GET.data_inicio }}">
+        <input type="date" name="data_fim" value="{{ request.GET.data_fim }}">
         <button>Filtrar</button>
     </form>
 
-    <url>
-        {% for emprestimo in emprestimos %}
+    <ul>
+        {% for emprestimo in emprestimos.object_list %}
             <li>{{ emprestimo.nome_usuario }} - {{ emprestimo.livro }} ({{ emprestimo.data_emprestimo }} a {{ emprestimo.data_devolucao }})</li>
+        {% empty %}
+            <li>Nenhum empréstimo encontrado</li>
         {% endfor %}
-    </url>
-    
+    </ul>
+
+    <!-- Paginação mantém os filtros utilizados -->
+    <div class="pagination">
+        {% if emprestimos.has_previous %}
+            <a href="?page=1
+                {% if request.GET.usuario %}&usuario={{ request.GET.usuario }}{% endif %}
+                {% if request.GET.livro %}&livro={{ request.GET.livro }}{% endif %}
+                {% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}
+                {% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}">Primeira</a>
+
+            <a href="?page={{ emprestimos.previous_page_number }}
+                {% if request.GET.usuario %}&usuario={{ request.GET.usuario }}{% endif %}
+                {% if request.GET.livro %}&livro={{ request.GET.livro }}{% endif %}
+                {% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}
+                {% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}">Anterior</a>
+        {% endif %}
+
+        <span>Página {{ emprestimos.number }} de {{ emprestimos.paginator.num_pages }}</span>
+
+        {% if emprestimos.has_next %}
+            <a href="?page={{ emprestimos.next_page_number }}
+                {% if request.GET.usuario %}&usuario={{ request.GET.usuario }}{% endif %}
+                {% if request.GET.livro %}&livro={{ request.GET.livro }}{% endif %}
+                {% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}
+                {% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}">Próxima</a>
+
+            <a href="?page={{ emprestimos.paginator.num_pages }}
+                {% if request.GET.usuario %}&usuario={{ request.GET.usuario }}{% endif %}
+                {% if request.GET.livro %}&livro={{ request.GET.livro }}{% endif %}
+                {% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}
+                {% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}">Última</a>
+        {% endif %}
+    </div>
 </body>
 </html>
