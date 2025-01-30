@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Livro, Autor, Emprestimo
+from .forms import LivroForm
 from django.db.models import Q
 
 from django.core.paginator import Paginator     #paginação
@@ -8,7 +9,6 @@ from django.core.paginator import Paginator     #paginação
 
 def home(request):
     return render(request, 'core/home.html')
-
 
 
 def livros_list(request):
@@ -37,6 +37,26 @@ def livros_list(request):
 
 
     return render(request, 'core/livros_list.html', {'page_obj': page_obj})
+
+
+
+# Criar novo livro
+def livro_create(request):
+    if request.method == 'POST':
+        form = LivroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('livros_list')
+        else:
+            form = LivroForm()
+        return render(render, 'livros/livro_form.html', {'form': form})
+
+def livro_detail(request, pk):
+    livro = get_object_or_404(Livro, pk=pk)
+    return render(request, 'livos/livro_detail.html')
+
+
+
 
 
 
