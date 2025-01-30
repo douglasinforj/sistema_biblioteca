@@ -7,6 +7,20 @@
 </head>
 <body>
     <h1>Lista de Emprestimos</h1>
+
+    <form method="get">
+        <input type="text" name="usuario" placeholder="Usuário" value="{{ request.GET.usuario }}">
+        <input type="text" name="livro" placeholder="Título do Livro" value="{{ request.GET.livro }}">
+        <input type="text" name="data_inicio" placeholder="Data Início" value="{{ request.GET.data_inicio }}">
+        <input type="text" name="data_fim" placeholder="Data Fim" value="{{ request.GET.data_fim }}">
+        <button>Filtrar</button>
+    </form>
+
+    <url>
+        {% for emprestimo in emprestimos %}
+            <li>{{ emprestimo.nome_usuario }} - {{ emprestimo.livro }} ({{ emprestimo.data_emprestimo }} a {{ emprestimo.data_devolucao }})</li>
+        {% endfor %}
+    </url>
     
 </body>
 </html>
