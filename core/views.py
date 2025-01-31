@@ -56,6 +56,18 @@ def livro_detail(request, pk):
     return render(request, 'livros/livro_detail.html')
 
 
+def livro_update(request, pk):
+    livro = get_object_or_404(Livro, pk=pk)
+    if request.method == 'POST':
+        form = LivroForm(request.POST, instance=livro)
+        if form.is_valid():
+            form.save()
+            return redirect('livro_detail', pk=pk)
+        else:
+            form = LivroForm(instance=livro)
+        return render(request, 'livros/livro_form.html', {'form': form})
+
+
 
 
 
