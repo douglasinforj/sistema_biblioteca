@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>{{ livro.titulo }}</h2>
+<p><strong>Autor</strong>{{ livro.autor }}</p>
+<p><strong>Data Publicação:</strong>{{ livro.data_publicacao }}</p>
+<p><strong>Disponível:</strong>{% if livro.disponivel %}Sim{% else %} Não{% endif %}</p>
+
+<a href="{% url 'livro_update' livro.pk %}" class="btn-warning">Editar</a>
+
+<form action="{url 'livro_delete' livro.pk }" method="post" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Deletar</button>
+</form>
+
+<a href="{% url 'livros_list'%}" class="btn btn-secondary">Voltar</a>
+
+{% endblock %}
