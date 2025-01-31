@@ -68,7 +68,12 @@ def livro_update(request, pk):
         return render(request, 'livros/livro_form.html', {'form': form})
 
 
-
+def livro_delete(request, pk):
+    livro = get_object_or_404(Livro, pk=pk)
+    if request.method == 'POST':
+        livro.delete()
+        return redirect('livros_list')
+    return render(request, 'livros/livro_confirm_delete.html', {'livro': livro})
 
 
 
