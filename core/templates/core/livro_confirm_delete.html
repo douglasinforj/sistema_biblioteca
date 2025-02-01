@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Tem certeza que deseja deletar "{{ livro.titulo }}"?</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmar</button>
+    <a href="{% url 'livro_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+
+{% endblock %}
