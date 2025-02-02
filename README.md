@@ -13,3 +13,6 @@ Foco neste exercício é praticar alem da criação da estrutura do django as se
 - Criação de Templates para ser amigavel para usuários
 - Configuração de Paginação de dados para diminuição de carregamento de dados no templates.
 - Consultas de dados via templates configuradas na views.
+- Estilização com bootstrap
+- Herança de Templates do django
+- Forms do django com adição direta de widgets para manipulação na template
