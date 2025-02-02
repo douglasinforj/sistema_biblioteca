@@ -47,13 +47,13 @@ def livro_create(request):
         if form.is_valid():
             form.save()
             return redirect('livros_list')
-        else:
-            form = LivroForm()
-        return render(render, 'livros/livro_form.html', {'form': form})
+    else:
+        form = LivroForm()
+    return render(request, 'core/livro_form.html', {'form': form})
 
 def livro_detail(request, pk):
     livro = get_object_or_404(Livro, pk=pk)
-    return render(request, 'livros/livro_detail.html')
+    return render(request, 'core/livro_detail.html')
 
 
 def livro_update(request, pk):
