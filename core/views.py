@@ -31,7 +31,7 @@ def livros_list(request):
         livros = livros.filter(disponivel=False)
 
     #paginação: 20 livros por páginas
-    paginator = Paginator(livros, 20)
+    paginator = Paginator(livros, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -62,10 +62,12 @@ def livro_update(request, pk):
         form = LivroForm(request.POST, instance=livro)
         if form.is_valid():
             form.save()
-            return redirect('livro_detail', pk=pk)
-        else:
-            form = LivroForm(instance=livro)
-        return render(request, 'livros/livro_form.html', {'form': form})
+            return redirect('livro_detail', pk=pk)  # Redireciona para a página de detalhes do livro
+    else:
+        form = LivroForm(instance=livro)  # Exibe o formulário de edição para um livro existente
+
+    return render(request, 'core/livro_form.html', {'form': form})
+
 
 
 def livro_delete(request, pk):
