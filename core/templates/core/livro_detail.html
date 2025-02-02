@@ -1,18 +1,31 @@
 {% extends 'base.html' %}
+
 {% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2>Detalhes do Livro</h2>
 
-<h2>{{ livro.titulo }}</h2>
-<p><strong>Autor</strong>{{ livro.autor }}</p>
-<p><strong>Data Publicação:</strong>{{ livro.data_publicacao }}</p>
-<p><strong>Disponível:</strong>{% if livro.disponivel %}Sim{% else %} Não{% endif %}</p>
+        <table class="table table-striped">
+            <tr>
+                <th>Título</th>
+                <td>{{ livro.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Autor</th>
+                <td>{{ livro.autor.nome }}</td>  <!-- Usando relação com um modelo "Autor" -->
+            </tr>
+            <tr>
+                <th>Data de Publicação</th>
+                <td>{{ livro.data_publicacao }}</td>
+            </tr>
+            <tr>
+                <th>Disponibilidade</th>
+                <td>{{ livro.disponivel|yesno:"Disponível,Indisponível" }}</td>
+            </tr>
+        </table>
 
-<a href="{% url 'livro_update' livro.pk %}" class="btn-warning">Editar</a>
-
-<form action="{url 'livro_delete' livro.pk }" method="post" style="display: inline;">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Deletar</button>
-</form>
-
-<a href="{% url 'livros_list'%}" class="btn btn-secondary">Voltar</a>
-
+        <a href="{% url 'livro_update' livro.pk %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'livros_list' %}" class="btn btn-secondary">Voltar</a>
+    </div>
+</div>
 {% endblock %}
