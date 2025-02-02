@@ -8,6 +8,7 @@
 <body>
 
     <h1>Lista de Livros</h1>
+
     <form method="get">
         <input type="text" name="titulo" placeholder="Titulo" value="{{ request.GET.titulo}}" >
         <input type="text" name="autor" placeholder="Autor" value="{{ request.GET.autor }}" >
@@ -18,6 +19,8 @@
         </select>
         <button type="submit">Filtrar</button>
     </form>
+
+    <a href="{% url 'livro_create' %}" class="btn btn-primary">Adicionar Novo Livro</a>
 
     <!--Listando Livros-->
     <ul>
