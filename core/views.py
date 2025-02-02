@@ -75,7 +75,7 @@ def livro_delete(request, pk):
     if request.method == 'POST':
         livro.delete()
         return redirect('livros_list')
-    return render(request, 'livros/livro_confirm_delete.html', {'livro': livro})
+    return render(request, 'core/livro_confirm_delete.html', {'livro': livro})
 
 
 
