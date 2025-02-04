@@ -127,7 +127,7 @@ def pessoa_create(request):
             return redirect('pessoa_list')
     else:
         form = PessoaForm()
-    return render(request, 'core/pessoa_form', {'form': form})
+    return render(request, 'core/pessoa_form.html', {'form': form})
 
 
 def pessoa_edit(request, pk):
