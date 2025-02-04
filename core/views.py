@@ -7,9 +7,14 @@ from django.core.paginator import Paginator     #paginação
 
 
 
+#=============================================HOME==========================================
+
 def home(request):
     return render(request, 'core/home.html')
 
+
+
+#=============================================LIVROS========================================
 
 def livros_list(request):
 
@@ -78,6 +83,33 @@ def livro_delete(request, pk):
     return render(request, 'core/livro_confirm_delete.html', {'livro': livro})
 
 
+
+#==============================PESSOAS==========================================
+
+def pessoa_list(request):
+    nome = request.GET.get('nome', '')
+    cpf = request.GET.get('cpf', '')
+    telefone =  request.GET.get('telefone', '')
+    email = request.GET.get('email', '')
+
+    if nome:
+        pessoas = pessoas.filter(nome__icontains=nome)
+    if cpf:
+        pessoas = pessoas.filter(cpf__icontains=cpf)
+    if telefone:
+        telefone = pessoas.filter(telefone__icontains=telefone)
+    if email:
+        pessoas = pessoas.filter(email_icontains=email)
+    
+    #paginação:
+    paginator = Paginator(pessoas, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'core/pessoa_list.html', {'page_obj': page_obj})
+
+
+
 def pessoa_create(request):
     if request.method == 'POST':
         form = PessoaForm(request.POST)
@@ -110,6 +142,9 @@ def pessoa_delete(request, pk):
 
 
 
+
+
+#============================================EMPRESTIMOS===================================
 
 
 
