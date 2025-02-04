@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Lista de Pessoas</h2>
+
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Pesquisar por nome, CPF, telefone ou email..." value="{{ query }}" >
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+
+    <a href="{% url 'pessoa_create' %}" class="btn btn-success mb-3">Criar novo registro</a>
+
+    <!--Exibir registros-->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pessoa in page_obj %}
+            <tr>
+                <td>{{ pessoa.nome }}</td>
+                <td>{{ pessoa.cpf }}</td>
+                <td>{{ pessoa.telefone }}</td>
+                <td>{{ pessoa.email }}</td>
+                <td>
+                    <a href="{% url 'pessoa_edit' pessoa.pk %}" class="btn btn-warning btn-sm ">Editar</a>
+                    <a href="{% url 'pessoa_delete' pessoa.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Nenhuma pessoa encontrada.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!--PAginação-->
+    <nav>
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?q={{ query }}&page=1">Primeira</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Anterior</a>
+                </li>
+            {% endif %}
+    
+            <li class="page-item disabled">
+                <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            </li>
+    
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}">Próxima</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">Última</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div>
+
+
+
+
+{% endblock %}

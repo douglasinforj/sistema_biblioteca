@@ -1,14 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Livro, Autor, Emprestimo
-from .forms import LivroForm
+from .models import Livro, Autor, Emprestimo, Pessoa
+from .forms import LivroForm, PessoaForm
 from django.db.models import Q
 
 from django.core.paginator import Paginator     #paginação
 
 
 
+#=============================================HOME==========================================
+
 def home(request):
     return render(request, 'core/home.html')
+
+
+
+#=============================================LIVROS========================================
+
+def gestao_livro(request):
+    return render(request, 'core/gestao_livro.html')
 
 
 def livros_list(request):
@@ -76,6 +85,79 @@ def livro_delete(request, pk):
         livro.delete()
         return redirect('livros_list')
     return render(request, 'core/livro_confirm_delete.html', {'livro': livro})
+
+
+
+#==============================PESSOAS==========================================
+
+def gestao_pessoa(request):
+    return render(request, 'core/gestao_pessoa.html')
+
+
+
+def pessoa_list(request):
+    
+    query = request.GET.get('q', '')
+
+    # Utlizando abordagem de busca geral para um campo só no template
+
+    pessoas = Pessoa.objects.all()
+
+    if query:
+        pessoas = pessoas.filter(
+            Q(nome__icontains=query) |
+            Q(cpf__icontains=query) |
+            Q(telefone__icontains=query) |
+            Q(email__icontains=query)
+        )
+    
+    #paginação:
+    paginator = Paginator(pessoas, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'core/pessoa_list.html', {'page_obj': page_obj})
+
+
+
+def pessoa_create(request):
+    if request.method == 'POST':
+        form = PessoaForm(request.POST)
+        if form.is_valid():
+            print("Formulário válido, salvando...")
+            form.save()
+            return redirect('pessoa_list')
+        else:
+            print("Erros no formulário:", form.errors)
+    else:
+        form = PessoaForm()
+    return render(request, 'core/pessoa_form.html', {'form': form})
+
+
+def pessoa_edit(request, pk):
+    pessoa = get_object_or_404(Pessoa, pk=pk)
+    if request.method == 'POST':
+        form = PessoaForm(request.POST, instance=pessoa)
+        if form.is_valid():
+            form.save()
+            return redirect('pessoa_list')
+    else:
+        form = PessoaForm(instance=pessoa)
+    return render(request, 'core/pessoa_form.html', {'form': form, 'pessoa': pessoa})
+
+
+def pessoa_delete(request, pk):
+    pessoa = get_object_or_404(Pessoa, pk=pk)
+    if request.method == 'POST':
+        pessoa.delete()
+        return redirect('pessoa_list')
+    return render(request, 'core/pessoa_confirm_delete.html', {'pessoa': pessoa})
+
+
+
+
+
+#============================================EMPRESTIMOS===================================
 
 
 

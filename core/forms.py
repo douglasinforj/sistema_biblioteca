@@ -1,5 +1,5 @@
 from django import forms
-from .models import Livro
+from .models import Livro, Pessoa
 
 class LivroForm(forms.ModelForm):
     class Meta:
@@ -11,3 +11,9 @@ class LivroForm(forms.ModelForm):
             'data_publicacao': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'disponivel': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+
+class PessoaForm(forms.ModelForm):
+    class Meta:
+        model = Pessoa
+        fields = ['nome', 'cpf','email', 'telefone']

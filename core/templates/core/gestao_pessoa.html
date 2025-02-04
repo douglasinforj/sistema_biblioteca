@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Gestão de Pessoas - Biblioteca{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+    <h1 class="mb-4">Gestão de Clientes</h1>
+    <p class="lead">Gerencie os usuários cadastrados na biblioteca.</p>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4">
+            <a href="{% url 'pessoa_list' %}" class="btn btn-primary btn-lg w-100">👥 Listar Pessoas</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'pessoa_create' %}" class="btn btn-success btn-lg w-100">➕ Cadastrar Pessoa</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
