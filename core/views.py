@@ -92,23 +92,20 @@ def gestao_pessoa(request):
 
 
 def pessoa_list(request):
-    nome = request.GET.get('nome', '')
-    cpf = request.GET.get('cpf', '')
-    telefone =  request.GET.get('telefone', '')
-    email = request.GET.get('email', '')
+    
+    query = request.GET.get('q', '')
 
-    # busca para filtragem
+    # Utlizando abordagem de busca geral para um campo só no template
 
     pessoas = Pessoa.objects.all()
 
-    if nome:
-        pessoas = pessoas.filter(nome__icontains=nome)
-    if cpf:
-        pessoas = pessoas.filter(cpf__icontains=cpf)
-    if telefone:
-        pessoas = pessoas.filter(telefone__icontains=telefone)
-    if email:
-        pessoas = pessoas.filter(email_icontains=email)
+    if query:
+        pessoas = pessoas.filter(
+            Q(nome__icontains=query) |
+            Q(cpf__icontains=query) |
+            Q(telefone__icontains=query) |
+            Q(email__icontains=query)
+        )
     
     #paginação:
     paginator = Paginator(pessoas, 10)
