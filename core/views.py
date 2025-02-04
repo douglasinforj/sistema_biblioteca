@@ -123,8 +123,11 @@ def pessoa_create(request):
     if request.method == 'POST':
         form = PessoaForm(request.POST)
         if form.is_valid():
+            print("Formulário válido, salvando...")
             form.save()
             return redirect('pessoa_list')
+        else:
+            print("Erros no formulário:", form.errors)
     else:
         form = PessoaForm()
     return render(request, 'core/pessoa_form.html', {'form': form})
