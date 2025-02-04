@@ -15,6 +15,19 @@ class Livro(models.Model):
 
     def __str__(self):
         return self.titulo
+
+
+class Pessoa(models.Model):
+    nome = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=11, unique=True)
+    email = models.EmailField(unique=True, blank=True, null=True)
+    telefone = models.CharField(max_length=15, blank=True, null=True)
+
+    def __str__(self):
+        return self.nome
+
+
+
     
 class Emprestimo(models.Model):
     livro = models.ForeignKey(Livro, on_delete=models.CASCADE, related_name='emprestimos')
