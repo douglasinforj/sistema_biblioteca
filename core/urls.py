@@ -11,6 +11,12 @@ urlpatterns = [
     path('livros/<int:pk>/delete/', views.livro_delete, name='livro_delete'),
 
 
+    path('pessoa/', views.pessoa_list, name='pessoa_list'),
+    path('pessoa/novo/', views.pessoa_create, name='pessoa_create')
+    path('pessoa/<int:pk>/editar/', views.pessoa_edit, name='pessoa_edit'),
+    path('pessoa/<int:pk>/deletar/', views.pessoa_delete, name='pessoa_delete'),
+
+
     path('emprestimos/', views.emprestimos_list, name='emprestimos_list'),
     
 ]
