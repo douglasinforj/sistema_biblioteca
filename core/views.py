@@ -86,7 +86,7 @@ def livro_delete(request, pk):
 
 #==============================PESSOAS==========================================
 
-def getao_pessoa(request):
+def gestao_pessoa(request):
     return render(request, 'core/gestao_pessoa.html')
 
 
