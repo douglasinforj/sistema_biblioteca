@@ -16,3 +16,20 @@ Foco neste exercício é praticar alem da criação da estrutura do django as se
 - Estilização com bootstrap
 - Herança de Templates do django
 - Forms do django com adição direta de widgets para manipulação na template
+
+
+## Funcionalidade criadas
+
+- Gestão de livros
+  - Cadastrar 
+  - Editar
+  - Deletar
+  - Listar (filtros)
+
+- Gestão de Clientes (pessoas)
+  - Cadastrar 
+  - Editar
+  - Deletar
+  - Listar (filtros)
+
+
