@@ -1,16 +1,48 @@
 {% extends "base.html" %}
 
-{% block title %}Cadastrar Pessoa{% endblock %}
+{% block title %}{% if pessoa %}Editar{% else %}Cadastrar{% endif %} Pessoa{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2 class="mb-4">{% if pessoa %}Editar{% else %}Cadastrar{% endif %} Pessoa</h2>
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">{% if pessoa %}Editar{% else %}Cadastrar{% endif %} Pessoa</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{% url 'pessoa_list' %}" class="btn btn-secondary">Cancelar</a>
-    </form>
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger">
+                            {% for error in field.errors %}
+                                <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'pessoa_list' %}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<!-- Adicionando classes Bootstrap ao formulário -->
+<style>
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+    }
+</style>
+
 {% endblock %}
