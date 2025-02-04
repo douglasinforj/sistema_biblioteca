@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Autor, Livro, Emprestimo
+from .models import Autor, Livro, Emprestimo, Pessoa
 
 @admin.register(Autor)
 class AutorAdmin(admin.ModelAdmin):
@@ -21,3 +21,9 @@ class EmprestimoAdmin(admin.ModelAdmin):
     list_display = ('livro', 'nome_usuario', 'data_emprestimo', 'data_devolucao')
     search_fields = ('nome_usuario', 'livro__titulo')  # Pesquisa por usuário e livro
     list_filter = ('data_emprestimo', 'data_devolucao', 'livro__autor')  # Filtros avançados
+
+
+@admin.register(Pessoa)
+class PessoaAdmin(admin.ModelAdmin):
+    list_display = ('nome','cpf', 'email', 'telefone' )
+    search_fields = ('nome', 'cpf', 'email')
