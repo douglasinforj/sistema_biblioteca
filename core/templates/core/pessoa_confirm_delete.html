@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
+<h2>Tem certeza que deseja excluir "{{ pessoa.nome }}"?</h2>
 
-<h2>Tem Certeza que deseja excluir "{{ pessoa.nome }}"</h2>
-
-<form>
+<form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Confirmar</button>
     <a href="{% url 'pessoa_list' %}" class="btn btn-secondary">Cancelar</a>
 </form>
-
 {% endblock %}
