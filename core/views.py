@@ -16,6 +16,10 @@ def home(request):
 
 #=============================================LIVROS========================================
 
+def gestao_livro(request):
+    return render(request, 'core/gestao_livro.html')
+
+
 def livros_list(request):
 
     #filtros via query parameters
