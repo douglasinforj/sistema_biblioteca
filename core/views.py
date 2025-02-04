@@ -101,6 +101,14 @@ def pessoa_edit(request, pk):
     return render(request, 'core/pessoa_form.html', {'form': form, 'pessoa': pessoa})
 
 
+def pessoa_delete(request, pk):
+    pessoa = get_object_or_404(Pessoa, pk=pk)
+    if request.method == 'POST':
+        pessoa.delete()
+        return redirect('pessoa_list')
+    return render(request, 'core/pessoa_confirm_delete.html', {'pessoa': pessoa})
+
+
 
 
 
