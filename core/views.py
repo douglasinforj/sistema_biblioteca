@@ -97,12 +97,16 @@ def pessoa_list(request):
     telefone =  request.GET.get('telefone', '')
     email = request.GET.get('email', '')
 
+    # busca para filtragem
+
+    pessoas = Pessoa.objects.all()
+
     if nome:
         pessoas = pessoas.filter(nome__icontains=nome)
     if cpf:
         pessoas = pessoas.filter(cpf__icontains=cpf)
     if telefone:
-        telefone = pessoas.filter(telefone__icontains=telefone)
+        pessoas = pessoas.filter(telefone__icontains=telefone)
     if email:
         pessoas = pessoas.filter(email_icontains=email)
     
