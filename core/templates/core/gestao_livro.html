@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Gestão Livro{% endblock%}
+
+{% block content %}
+
+<div class="text-center">
+    <h1 class="mb-4">Gestão Livro</h1>
+    <p class="lead">Gerencie e cadastre Livros a biblioteca.</p>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4">
+            <a href="{% url 'livros_list' %}" class="btn btn-primary btn-lg w-100">📚 Listar Livros</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'emprestimos_list' %}" class="btn btn-success btn-lg w-100">📄 Listar Empréstimos</a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock%}
