@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Livro, Autor, Emprestimo
-from .forms import LivroForm
+from .forms import LivroForm, PessoaForm
 from django.db.models import Q
 
 from django.core.paginator import Paginator     #paginação
@@ -76,6 +76,22 @@ def livro_delete(request, pk):
         livro.delete()
         return redirect('livros_list')
     return render(request, 'core/livro_confirm_delete.html', {'livro': livro})
+
+
+def pessoa_create(request):
+    if request.method == 'POST':
+        form = PessoaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('pessoa_list')
+    else:
+        form = PessoaForm()
+    return render(request, 'core/pessoa_form', {'form': form})
+
+
+
+
+
 
 
 
