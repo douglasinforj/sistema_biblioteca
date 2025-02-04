@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Livro, Autor, Emprestimo
+from .models import Livro, Autor, Emprestimo, Pessoa
 from .forms import LivroForm, PessoaForm
 from django.db.models import Q
 
@@ -89,6 +89,16 @@ def pessoa_create(request):
     return render(request, 'core/pessoa_form', {'form': form})
 
 
+def pessoa_edit(request, pk):
+    pessoa = get_object_or_404(Pessoa, pk=pk)
+    if request.method == 'POST':
+        form = PessoaForm(request.POST, instance=pessoa)
+        if form.is_valid():
+            form.save()
+            return redirect('pessoa_list')
+    else:
+        form = PessoaForm(instance=pessoa)
+    return render(request, 'core/pessoa_form.html', {'form': form, 'pessoa': pessoa})
 
 
 
