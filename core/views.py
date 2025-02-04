@@ -86,6 +86,11 @@ def livro_delete(request, pk):
 
 #==============================PESSOAS==========================================
 
+def getao_pessoa(request):
+    return render(request, 'core/gestao_pessoa.html')
+
+
+
 def pessoa_list(request):
     nome = request.GET.get('nome', '')
     cpf = request.GET.get('cpf', '')
